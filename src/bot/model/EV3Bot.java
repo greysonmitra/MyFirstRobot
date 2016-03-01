@@ -1,10 +1,12 @@
 package bot.model;
 
-import lejos.hardware.motor.Motor;
-import lejos.hardware.port.Port;
-import lejos.robotics.chassis.*;
+import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
-import lejos.hardware.sensor.*;
+import lejos.hardware.motor.Motor;
+import lejos.hardware.sensor.EV3TouchSensor;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
 
@@ -49,9 +51,20 @@ public class EV3Bot
 	{
 		ultrasonicSamples = new float [distanceSensor.sampleSize()];
 		distanceSensor.fetchSample(ultrasonicSamples, 0);
+		
+		for(ultrasonicSamples[0] = 0; (ultrasonicSamples[0] % 2) > (ultrasonicSamples[0] + 1); ultrasonicSamples[0]++)
+		{
+			if((ultrasonicSamples[0] % 2) > (ultrasonicSamples[0] / 2))
+			botPilot.rotate(-90);
+			botPilot.travel(20);
+		}
+		
+		
+		
 		if(ultrasonicSamples[0] < 8.5)
 		{
 			botPilot.travel(20.00);
+			botPilot.rotate(90);
 		}
 		else
 		{
