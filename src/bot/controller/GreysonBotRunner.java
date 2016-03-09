@@ -7,7 +7,6 @@ public class GreysonBotRunner
 	{
 		BotController myBotController = new BotController();
 		myBotController.start();
-
 	}
 
 }
